@@ -1,27 +1,40 @@
 package com.loong.wechat.utils;
 import java.io.BufferedReader;  
+import java.io.IOException;
 import java.io.InputStream;  
 import java.io.InputStreamReader;  
 import java.io.OutputStream;  
+import java.io.PrintWriter;
 import java.net.ConnectException;  
 import java.net.URL;  
   
+
 import javax.net.ssl.HttpsURLConnection;  
 import javax.net.ssl.SSLContext;  
 import javax.net.ssl.SSLSocketFactory;  
 import javax.net.ssl.TrustManager;  
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 
 import com.loong.wechat.pojo.AccessToken;
-import com.loong.wechat.pojo.Menu;
 
 import net.sf.json.JSONObject;   
 
 public class WeixinUtil {
-//	private static Logger log = LoggerFactory.getLogger(WeixinUtil.class);  
-	// 获取access_token的接口地址（GET） 限200（次/天）  
-	public final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";  
-	// 菜单创建（POST） 限100（次/天）  
-	public static String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";  
+	protected static PropertiesUtil pp = new PropertiesUtil();
+	private static Logger logger = Logger.getLogger(WeixinUtil.class);
+	
+	// 获取access_token的接口地址（GET） 限200（次/天）
+	public static String access_token_url = pp.read("config.properties","access_token_url");
+	// 菜单创建（POST） 限100（次/天）
+	public static String menu_create_url = pp.read("config.properties","menu_create_url");
+	
+	private static String appId = pp.read("config.properties","appId");
+	private static String appSecret = pp.read("config.properties","appSecret"); 
+ 
     /** 
      * 发起https请求并获取结果 
      *  
@@ -94,10 +107,10 @@ public class WeixinUtil {
 	 * @param appsecret 密钥 
 	 * @return 
 	 */  
-	public static AccessToken getAccessToken(String appid, String appsecret) {  
+	public static AccessToken getAccessToken() {  
 	    AccessToken accessToken = null;  
-	  
-	    String requestUrl = access_token_url.replace("APPID", appid).replace("APPSECRET", appsecret);  
+	    String requestUrl = access_token_url.replace("APPID", appId).replace("APPSECRET", appSecret);  
+	    logger.info("access_token_url: " + access_token_url);
 	    JSONObject jsonObject = httpRequest(requestUrl, "GET", null);  
 	    // 如果请求成功  
 	    if (null != jsonObject) {  
@@ -114,31 +127,33 @@ public class WeixinUtil {
 	    }  
 	    return accessToken;  
 	}
-	/** 
-	 * 创建菜单 
-	 *  
-	 * @param menu 菜单实例 
-	 * @param accessToken 有效的access_token 
-	 * @return 0表示成功，其他值表示失败 
-	 */  
-	public static int createMenu(Menu menu, String accessToken) {  
-	    int result = 0;  
-	  
-	    // 拼装创建菜单的url  
-	    String url = menu_create_url.replace("ACCESS_TOKEN", accessToken);  
-	    // 将菜单对象转换成json字符串  
-	    String jsonMenu = JSONObject.fromObject(menu).toString();  
-	    // 调用接口创建菜单  
-	    JSONObject jsonObject = httpRequest(url, "POST", jsonMenu);  
-	  
-	    if (null != jsonObject) {  
-	        if (0 != jsonObject.getInt("errcode")) {  
-	            result = jsonObject.getInt("errcode"); 
-	            System.out.println("创建菜单失败errcode:"+jsonObject.getInt("errcode")+"errmsg:"+jsonObject.getString("errmsg"));
-//	            log.error("创建菜单失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
-	        }  
-	    }  
-	  
-	    return result;  
-	} 
+	
+	/*
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response) 确认请求来自于微信服务器
+	 */
+	public static void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException{
+		System.out.println("微信确认请求开始！！！");
+		// 微信加密签名
+		String signature = request.getParameter("signature");
+		System.out.println("signature:" + signature);
+		// 时间戳
+		String timestamp = request.getParameter("timestamp");
+		System.out.println("timestamp:" + timestamp);
+		// 随机数
+		String nonce = request.getParameter("nonce");
+		System.out.println("nonce:" + nonce);
+		// 随机字符串
+		String echostr = request.getParameter("echostr");
+		System.out.println("echostr:" + echostr);
+
+		PrintWriter out = response.getWriter();
+		// 通过校验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
+		if (SignUtil.checkSignature(signature, timestamp, nonce)) {
+			out.print(echostr);
+		}
+		out.close();
+	}
+	
 }

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import com.loong.wechat.message.resp.TextMessage;
 import com.loong.wechat.utils.MessageUtil;
 
@@ -13,10 +15,11 @@ import com.loong.wechat.utils.MessageUtil;
  */
 public class LoongService {
 	// private static OperatorUtil operatorUtil;
+	private static Logger logger = Logger.getLogger(LoongService.class);
 	public static String processRequest(HttpServletRequest request) {
 		String respMessage = null;
 		// 默认返回的文本消息类容
-		String respContent = "请求处理异常，请稍后尝试！";
+		String respContent = "客服正在思考如何回复你，请稍等。。。";
 		String fromUserName = "";
 		String toUserName = "";
 		String msgType = "";
@@ -39,23 +42,23 @@ public class LoongService {
 				if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
 					// 事件KEY值，与创建自定义菜单时指定的KEY值对应
 					String eventKey = requestMap.get("EventKey");
-					if ("stuInfoEdit".equals(eventKey)) {// 个人信息修改
-						// respContent=new
+					if ("scan".equals(eventKey)) {// 扫码
+						 respContent="扫码功能目前不可用，完善中。。。";
 						// OperatorUtil().editStuInfo(fromUserName);
-					} else if ("stuInfoView".equals(eventKey)) {
-						// respContent=new
+					} else if ("takePicture".equals(eventKey)) {//拍照
+						 respContent="拍照功能目前不可用，完善中。。。";
 						// OperatorUtil().viewStuInfo(fromUserName);
-					} else if ("stuTravelView".equals(eventKey)) {// 行程查看
-						// respContent=new
+					} else if ("testThink".equals(eventKey)) {// 测试思想
+						 respContent="测试思想文章正在搜集中，请耐心等待，不要激动。";
 						// OperatorUtil().viewTravel(fromUserName);
-					} else if ("stuTravelAdd".equals(eventKey)) {// 行程添加
-						// respContent=new
+					} else if ("testTechnology".equals(eventKey)) {// 测试技术
+						 respContent="测试技术文章正在搜集中，请耐心等待，不要激动。";
 						// OperatorUtil().addTravel(fromUserName);
-					} else if ("stuTravelEdit".equals(eventKey)) {// 行程修改
-						// respContent=new
+					} else if ("testManage".equals(eventKey)) {// 测试管理
+						 respContent="测试管理文章正在搜集中，请耐心等待，不要激动。";
 						// OperatorUtil().editTravel(fromUserName);
 					} else if ("help".equals(eventKey)) {// 操作说明
-						respContent = "绑定账号:请回复  用户名绑定+用户名,例:用户名绑定fangw";
+						respContent = "人生如戏，全靠演技。";
 					} else if ("callAdmin".equals(eventKey)) {// 呼叫管理员
 						respContent = "已通知管理员，稍后管理员会与您联系";
 					} else if ("suggestions".equals(eventKey)) {// 意见反馈
@@ -169,6 +172,7 @@ public class LoongService {
 
 			// respMessage = MessageUtil.textMessageToXml(textMessage);
 		} catch (Exception e) {
+			logger.error("catch a exception");
 			respMessage = ("<xml><ToUserName><![CDATA["
 					+ fromUserName
 					+ "]]></ToUserName>"

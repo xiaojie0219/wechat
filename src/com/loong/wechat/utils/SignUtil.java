@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,8 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * 请求校验工具类
  */
 public class SignUtil {
+	protected static Properties pp = new Properties();
 	//与微信配置中的的Token一致
-	private static String token  = "chinaloong";
+	private static String token  = pp.getProperty("token");
 	
 	public static boolean checkSignature(String signature, String timestamp,
 			String nonce) {
