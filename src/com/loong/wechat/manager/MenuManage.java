@@ -26,12 +26,12 @@ public class MenuManage {
     public static Menu getMenu() {  
         CommonButton btn11 = new CommonButton();  
         btn11.setName("扫码");  
-        btn11.setType("click");  
+        btn11.setType("scancode_waitmsg");  
         btn11.setKey("scan");  
   
         CommonButton btn12 = new CommonButton();  
         btn12.setName("拍照");  
-        btn12.setType("click");  
+        btn12.setType("pic_photo_or_album");  
         btn12.setKey("takePicture"); 
   
         CommonButton btn21 = new CommonButton();  

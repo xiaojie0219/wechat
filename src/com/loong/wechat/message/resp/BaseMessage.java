@@ -1,8 +1,6 @@
 package com.loong.wechat.message.resp;
 /**
  * 消息基类 
- * @author pengsong
- * @date 2016.01.19
  */
 public class BaseMessage {
 	//接收方账号（收到的openId）

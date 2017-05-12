@@ -72,6 +72,14 @@ public class MessageUtil {
 	 */
 	public static final String  EVENT_TYPE_UNSUBSCRIBE = "unsubscribe";
 	/**
+	 * 事件类型：scancode_waitmsg（扫码+消息等待）
+	 */
+	public static final String EVENT_TYPE_SCANCODE_WAITMSG = "scancode_waitmsg";
+	/**
+	 * 事件类型：pic_photo_or_album（弹出拍照或者相册发图）
+	 */
+	public static final String EVENT_TYPE_PIC_PHOTO_OR_ALBUM = "pic_photo_or_album";
+	/**
 	 * 事件类型：click（自定义菜单点击事件）
 	 */
 	public static final String  EVENT_TYPE_CLICK= "CLICK";

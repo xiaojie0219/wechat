@@ -16,6 +16,7 @@ import com.loong.wechat.utils.MessageUtil;
 public class LoongService {
 	// private static OperatorUtil operatorUtil;
 	private static Logger logger = Logger.getLogger(LoongService.class);
+
 	public static String processRequest(HttpServletRequest request) {
 		String respMessage = null;
 		// 默认返回的文本消息类容
@@ -33,9 +34,8 @@ public class LoongService {
 			toUserName = requestMap.get("ToUserName");
 			// 消息类型
 			msgType = requestMap.get("MsgType");
-			// String eventType = requestMap.get("Event");
-			String fromContent = requestMap.get("Content");
-			String userName = "";
+			
+			
 			if ((MessageUtil.REQ_MESSSAGE_TYPE_EVENT).equals(msgType)) {
 				// 事件类型
 				String eventType = requestMap.get("Event");
@@ -43,19 +43,19 @@ public class LoongService {
 					// 事件KEY值，与创建自定义菜单时指定的KEY值对应
 					String eventKey = requestMap.get("EventKey");
 					if ("scan".equals(eventKey)) {// 扫码
-						 respContent="扫码功能目前不可用，完善中。。。";
+						respContent = "扫码功能目前不可用，完善中。。。";
 						// OperatorUtil().editStuInfo(fromUserName);
-					} else if ("takePicture".equals(eventKey)) {//拍照
-						 respContent="拍照功能目前不可用，完善中。。。";
+					} else if ("takePicture".equals(eventKey)) {// 拍照
+						respContent = "拍照功能目前不可用，完善中。。。";
 						// OperatorUtil().viewStuInfo(fromUserName);
 					} else if ("testThink".equals(eventKey)) {// 测试思想
-						 respContent="测试思想文章正在搜集中，请耐心等待，不要激动。";
+						respContent = "测试思想文章正在搜集中，请耐心等待，不要激动。";
 						// OperatorUtil().viewTravel(fromUserName);
 					} else if ("testTechnology".equals(eventKey)) {// 测试技术
-						 respContent="测试技术文章正在搜集中，请耐心等待，不要激动。";
+						respContent = "测试技术文章正在搜集中，请耐心等待，不要激动。";
 						// OperatorUtil().addTravel(fromUserName);
 					} else if ("testManage".equals(eventKey)) {// 测试管理
-						 respContent="测试管理文章正在搜集中，请耐心等待，不要激动。";
+						respContent = "测试管理文章正在搜集中，请耐心等待，不要激动。";
 						// OperatorUtil().editTravel(fromUserName);
 					} else if ("help".equals(eventKey)) {// 操作说明
 						respContent = "人生如戏，全靠演技。";
@@ -68,10 +68,15 @@ public class LoongService {
 					}
 				}
 			}
+			
 			// 订阅
-			String eventTypeSub = requestMap.get("Event");
-			if ((MessageUtil.EVENT_TYPE_SUBSCRIBE).equals(eventTypeSub)) {
-				respContent = "测试公众号“中国龙”，感谢您的关注! ";
+			String eventType = requestMap.get("Event");
+			if ((MessageUtil.EVENT_TYPE_SUBSCRIBE).equals(eventType)) {
+				respContent = "测试公众号“中国龙”，感谢您的关注!";
+			}
+			//取消订阅
+			if ((MessageUtil.EVENT_TYPE_UNSUBSCRIBE).equals(eventType)) {
+				respContent = "您太残忍了，友尽。";
 			}
 			// event
 			// if(eventType.equals(MessageUtil.EVENT_TYPE_CLICK)){
@@ -87,40 +92,32 @@ public class LoongService {
 			// // return respMessage;
 			// }
 			// }
-			if (fromContent.contains("用户名绑定")) {
-				userName = fromContent.substring(5).trim();
-				// respContent=new
-				// OperatorUtil().bindAccount(fromUserName,userName);
-			}
-			if (fromContent.contains("解除绑定")) {
-				userName = fromContent.substring(4).trim();
-				if ("oS-GywW5Aljk6V5v1JGDiUAOMdX0".equals(fromUserName)) {
-					// respContent=new OperatorUtil().unBindAccount(userName);
-				} else {
-					respContent = "您不具备管理员权限";
-				}
+//			if (fromContent.contains("用户名绑定")) {
+//				userName = fromContent.substring(5).trim();
+//				// respContent=new
+//				// OperatorUtil().bindAccount(fromUserName,userName);
+//			}
+//			if (fromContent.contains("解除绑定")) {
+//				userName = fromContent.substring(4).trim();
+//				if ("oS-GywW5Aljk6V5v1JGDiUAOMdX0".equals(fromUserName)) {
+//					// respContent=new OperatorUtil().unBindAccount(userName);
+//				} else {
+//					respContent = "您不具备管理员权限";
+//				}
 
-			}
-			if ("行程查看".equals(fromContent)) {
-				// respContent=new OperatorUtil().viewTravel(fromUserName);
-			}
-			if ("行程添加".equals(fromContent)) {
-				// respContent=new OperatorUtil().addTravel(fromUserName);
-			}
-			if ("行程修改".equals(fromContent)) {
-				// respContent=new OperatorUtil().editTravel(fromUserName);
-			}
+//			}
+			String fromContent = requestMap.get("Content");
 			if ("帮助".equals(fromContent)) {
-				respContent = "绑定账号:请回复  用户名绑定+用户名,例:用户名绑定fangw\n行程查看:请回复  行程查看\n行程添加:请回复  行程添加\n行程修改:请回复  行程修改\n";
+				respContent = "请果断添加管理员微信号xiaojay0219获得更多帮助。";
 			}
 			// 回复文本消息
-			TextMessage textMessage = new TextMessage();
-			textMessage.setToUserName(toUserName);
-			textMessage.setFromUserName(fromUserName);
-			textMessage.setCreateTime(new Date().getTime());
-			textMessage.setMsgType(MessageUtil.RESP_MESSSAGE_TYPE_TEXT);
-			textMessage.setFuncFlag(0);
-			StringBuffer sb = new StringBuffer();
+//			TextMessage textMessage = new TextMessage();
+//			textMessage.setToUserName(toUserName);
+//			textMessage.setFromUserName(fromUserName);
+//			textMessage.setCreateTime(new Date().getTime());
+//			textMessage.setMsgType(MessageUtil.RESP_MESSSAGE_TYPE_TEXT);
+//			textMessage.setFuncFlag(0);
+//			StringBuffer sb = new StringBuffer();
 			// 文本消息
 			/*
 			 * if(msgType.equals(MessageUtil.REQ_MESSSAGE_TYPE_TEXT)){
