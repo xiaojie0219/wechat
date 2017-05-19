@@ -73,7 +73,7 @@ public class MenuManage {
         mainBtn2.setSub_button(new Button[] { btn21, btn22, btn23});  
   
         ComplexButton mainBtn3 = new ComplexButton();  
-        mainBtn3.setName("互动");  
+        mainBtn3.setName("互动"); 
         mainBtn3.setSub_button(new Button[] { btn31, btn32, btn33 });  
   
         /** 
