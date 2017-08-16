@@ -1,5 +1,10 @@
 package com.loong.wechat.pojo;
 
+/**
+ * 一级菜单按钮
+ * @author Jay
+ *
+ */
 public class ComplexButton extends Button {  
     private Button[] sub_button;  
   

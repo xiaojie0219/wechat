@@ -6,9 +6,15 @@ import com.loong.wechat.pojo.Button;
 import com.loong.wechat.pojo.CommonButton;
 import com.loong.wechat.pojo.ComplexButton;
 import com.loong.wechat.pojo.Menu;
+import com.loong.wechat.pojo.ViewButton;
 import com.loong.wechat.utils.PropertiesUtil;
 import com.loong.wechat.utils.WeixinUtil;
 
+/**
+ * 菜单创建类
+ * @author Jay
+ *
+ */
 public class MenuManage {
 	protected static PropertiesUtil pp = new PropertiesUtil();
 	// 获取access_token的接口地址（GET） 限200（次/天）
@@ -17,7 +23,14 @@ public class MenuManage {
 	// 菜单创建（POST） 限100（次/天）
 	public static String menu_create_url = pp.read("config.properties",
 			"menu_create_url");
-
+	public static final String btn11Key = "scan";
+	public static final String btn12Key = "takePicture";
+	public static final String btn21Url = "https://m.baidu.com";
+	public static final String btn22Key = "testTechnology";
+	public static final String btn23Key = "testManage";
+	public static final String btn31Key = "help";
+	public static final String btn32Key = "callAdmin";
+	public static final String btn33Key = "suggestions";
 	/** 
      * 组装菜单数据 
      *  
@@ -27,42 +40,42 @@ public class MenuManage {
         CommonButton btn11 = new CommonButton();  
         btn11.setName("扫码");  
         btn11.setType("scancode_waitmsg");  
-        btn11.setKey("scan");  
+        btn11.setKey(btn11Key);  
   
         CommonButton btn12 = new CommonButton();  
         btn12.setName("拍照");  
         btn12.setType("pic_photo_or_album");  
-        btn12.setKey("takePicture"); 
+        btn12.setKey(btn12Key); 
   
-        CommonButton btn21 = new CommonButton();  
+        ViewButton btn21 = new ViewButton();  
         btn21.setName("测试思想");  
-        btn21.setType("click");  
-        btn21.setKey("testThink");  
+        btn21.setType("view");  
+        btn21.setUrl(btn21Url);  
   
         CommonButton btn22 = new CommonButton();  
         btn22.setName("测试技术");  
         btn22.setType("click");  
-        btn22.setKey("testTechnology");  
+        btn22.setKey(btn22Key);  
   
         CommonButton btn23 = new CommonButton();  
         btn23.setName("测试管理");  
         btn23.setType("click");  
-        btn23.setKey("testManage");  
+        btn23.setKey(btn23Key);  
   
         CommonButton btn31 = new CommonButton();  
         btn31.setName("操作说明");  
         btn31.setType("click");  
-        btn31.setKey("help");  
+        btn31.setKey(btn31Key);  
   
         CommonButton btn32 = new CommonButton();  
         btn32.setName("呼叫管理员");  
         btn32.setType("click");  
-        btn32.setKey("callAdmin");  
+        btn32.setKey(btn32Key);  
   
         CommonButton btn33 = new CommonButton();  
         btn33.setName("意见反馈");  
         btn33.setType("click");  
-        btn33.setKey("suggestions");  
+        btn33.setKey(btn33Key);  
   
         ComplexButton mainBtn1 = new ComplexButton();  
         mainBtn1.setName("测试入口");  

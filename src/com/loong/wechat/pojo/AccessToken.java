@@ -1,5 +1,9 @@
 package com.loong.wechat.pojo;
-
+/**
+ * 设置或获取token
+ * @author Jay
+ *
+ */
 public class AccessToken {
 	// 获取到的凭证  
     private String token;  

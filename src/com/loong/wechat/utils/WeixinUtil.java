@@ -31,6 +31,8 @@ public class WeixinUtil {
 	public static String access_token_url = pp.read("config.properties","access_token_url");
 	// 菜单创建（POST） 限100（次/天）
 	public static String menu_create_url = pp.read("config.properties","menu_create_url");
+	// 获取微信公众平台保存图片的mediaID
+	public static String get_mediaID_url = pp.read("config.properties","get_mediaID_url");
 	
 	private static String appId = pp.read("config.properties","appId");
 	private static String appSecret = pp.read("config.properties","appSecret"); 
@@ -93,10 +95,11 @@ public class WeixinUtil {
             System.out.println(buffer.toString());
             jsonObject = JSONObject.fromObject(buffer.toString());  
         } catch (ConnectException ce) {  
-            System.out.println("Weixin server connection timed out.");
+//            System.out.println("Weixin server connection timed out.");
+        	logger.error("Weixin server connection timed out.", ce);  
         } catch (Exception e) {  
-        	System.err.println("https request error:{}");
-//            log.error("https request error:{}", e);  
+//        	System.err.println("https request error:{}");
+            logger.error("https request error:{}", e);  
         }  
         return jsonObject;  
     }  
@@ -121,8 +124,8 @@ public class WeixinUtil {
 	        } catch (Exception e) {  
 	            accessToken = null;  
 	            // 获取token失败  
-	            System.out.println("获取token失败 errcode:"+jsonObject.getInt("errcode")+"errmsg:"+jsonObject.getString("errmsg"));
-//	            log.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
+//	            System.out.println("获取token失败 errcode:"+jsonObject.getInt("errcode")+"errmsg:"+jsonObject.getString("errmsg"));
+	            logger.error("获取token失败 errcode:"+jsonObject.getInt("errcode")+"errmsg:"+jsonObject.getString("errmsg"));  
 	        }  
 	    }  
 	    return accessToken;  

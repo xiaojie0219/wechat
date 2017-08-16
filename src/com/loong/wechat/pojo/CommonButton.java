@@ -1,8 +1,12 @@
 package com.loong.wechat.pojo;
-
+/**
+ * 二级菜单按钮
+ * @author Jay
+ *
+ */
 public class CommonButton extends Button {
 	private String type;  
-    private String key;  
+    private String key;
   
     public String getType() {  
         return type;  

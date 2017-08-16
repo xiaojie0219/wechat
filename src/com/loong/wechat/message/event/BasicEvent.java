@@ -1,19 +1,20 @@
-package com.loong.wechat.message.resp;
+package com.loong.wechat.message.event;
 /**
- * 消息基类 
+ * 事件基类
+ * @author Jay
  */
-public class BaseMessage {
-	//接收方账号（收到的openId）
-	private String ToUserName;
+public class BasicEvent {
 	//开发者微信号
+	private String ToUserName;
+	//发送方账号（一个OpenID）
 	private String FromUserName;
-	//消息创建时间(长整型)
+	//消息创建时间（长整型）
 	private long CreateTime;
-	//消息类型（text/music/news）
+	//消息类型
 	private String MsgType;
-	//位0x0001 被标记时，星标刚收到的消息
-	private int FuncFlag;
-
+	//事件类型
+	private String Event;
+	
 	public String getToUserName() {
 		return ToUserName;
 	}
@@ -38,10 +39,11 @@ public class BaseMessage {
 	public void setMsgType(String msgType) {
 		MsgType = msgType;
 	}
-	public int getFuncFlag() {
-		return FuncFlag;
+	public String getEvent() {
+		return Event;
 	}
-	public void setFuncFlag(int funcFlag) {
-		FuncFlag = funcFlag;
+	public void setEvent(String event) {
+		Event = event;
 	}
+	
 }

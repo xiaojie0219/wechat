@@ -21,7 +21,7 @@ public class PropertiesUtil {
 			pp.load(this.getClass().getClassLoader()
 					.getResourceAsStream(fileName));
 			String n = pp.getProperty(key);
-			System.out.println(n);
+			System.out.println("properties key: " + key + "; value:"+ n);
 			return n;
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,6 +1,6 @@
 package com.loong.wechat.message.resp;
 /**
- * 响应的音乐消�?
+ * 音乐消息回复类
  * @author pengsong
  * @date 2016.01.19
  */

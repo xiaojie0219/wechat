@@ -13,9 +13,11 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.loong.wechat.message.resp.Article;
+import com.loong.wechat.message.resp.ImageMessage;
 import com.loong.wechat.message.resp.MusicMessage;
 import com.loong.wechat.message.resp.NewsMessage;
 import com.loong.wechat.message.resp.TextMessage;
+import com.loong.wechat.message.resp.ViewMessage;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -109,13 +111,20 @@ public class MessageUtil {
 		//遍历所有的子节点取得信息类容
 		for(Element elem:elementList){
 			reqMap.put(elem.getName(),elem.getText());
+			List<Element> elemSon = elem.elements();
+            for(Element e:elemSon){
+                //遍历的结果放到集合中
+            	reqMap.put(e.getName(), e.getText());
+            }
 		}
+		
 		//释放资源
 		inputStream.close();
 		inputStream = null;
 		
 		return reqMap;		
 	}
+	
 	/**
 	 * 响应消息转换成xml返回
 	 * 文本消息对象转换成xml
@@ -124,6 +133,17 @@ public class MessageUtil {
 		xstream.alias("xml", textMessage.getClass());
 		return xstream.toXML(textMessage);
 	}
+	
+	/**
+	 * 响应消息转换成xml返回
+	 * 图片消息对象转换成xml
+	 */
+	public  static String imageMessageToXml(ImageMessage imageMessage) {
+		xstream.alias("xml", imageMessage.getClass());
+		xstream.alias("Image", imageMessage.getImage().getClass());
+		return xstream.toXML(imageMessage);
+	}
+	
 	/**
 	 * 音乐消息的对象的转换成xml
 	 * 
@@ -141,6 +161,16 @@ public class MessageUtil {
 		xstream.alias("item", new Article().getClass());
 		return xstream.toXML(newsMessage);
 	}
+	
+	/**
+	 * view跳转url的对象转换成xml
+	 * 
+	 */
+	public  static String viewMessageToXml(ViewMessage viewMessage) {
+		xstream.alias("xml", viewMessage.getClass());
+		return xstream.toXML(viewMessage);
+	}
+	
 	/**
 	 * 拓展xstream，使得支持CDATA块
 	 * 

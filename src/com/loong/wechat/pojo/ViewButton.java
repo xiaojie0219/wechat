@@ -1,5 +1,10 @@
 package com.loong.wechat.pojo;
 
+/**
+ * view型按钮
+ * @author Jay
+ *
+ */
 public class ViewButton extends Button {
 	private String type;  
     private String url;
