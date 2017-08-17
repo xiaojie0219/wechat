@@ -123,7 +123,7 @@ public class MenuManage {
 	        if (0 != jsonObject.getInt("errcode")) {  
 	            result = jsonObject.getInt("errcode"); 
 	            System.out.println("创建菜单失败errcode:"+jsonObject.getInt("errcode")+"errmsg:"+jsonObject.getString("errmsg"));
-//	            log.error("创建菜单失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
+//	            logger.error("创建菜单失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
 	        }  
 	    }  
 	  

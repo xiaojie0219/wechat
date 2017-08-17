@@ -1,14 +1,14 @@
 package com.loong.wechat.message.resp;
 
 public class ImageMessage extends BaseMessage {
-    private Image image;
+    private Image Image;
 
 	public Image getImage() {
-		return image;
+		return Image;
 	}
 
 	public void setImage(Image image) {
-		this.image = image;
+		this.Image = image;
 	}
 /*
 	public String getXmlRespMessage() {

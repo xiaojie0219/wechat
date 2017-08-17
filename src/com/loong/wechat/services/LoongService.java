@@ -1,5 +1,7 @@
 package com.loong.wechat.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,8 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import com.loong.wechat.manager.MenuManage;
+import com.loong.wechat.message.resp.Article;
 import com.loong.wechat.message.resp.Image;
 import com.loong.wechat.message.resp.ImageMessage;
+import com.loong.wechat.message.resp.NewsMessage;
 import com.loong.wechat.message.resp.TextMessage;
 import com.loong.wechat.message.resp.ViewMessage;
 import com.loong.wechat.utils.MessageUtil;
@@ -87,7 +91,35 @@ public class LoongService implements Comparable<Object>{
 						break;
 					}
 					case (MenuManage.btn22Key):{
-						respContent = "测试技术文章正在搜集中，请耐心等待，不要激动。";
+//						respContent = "测试技术文章正在搜集中，请耐心等待，不要激动。";
+						//返回图文消息
+						NewsMessage newsMessage = new NewsMessage();
+						newsMessage.setFromUserName(toUserName);
+						newsMessage.setToUserName(fromUserName);
+						newsMessage.setCreateTime(System.currentTimeMillis());
+						newsMessage.setMsgType("news");
+						newsMessage.setArticleCount(2);
+						List<Article> articleList = new ArrayList<Article>(); 
+						Article article1 = new Article();
+						Article article2 = new Article();
+						
+						article1.setTitle("清纯可爱的漂亮妹子");
+						article1.setUrl("http://mp.weixin.qq.com");
+						article1.setPicUrl("https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=206533366,2722257096&fm=173&s=A78145A1C80240DC5424ADBD03009000&w=601&h=790&img.JPEG");
+						article1.setDescription("description1");
+						
+						article2.setTitle("完美体型");
+						article2.setUrl("http://mp.weixin.qq.com");
+						article2.setPicUrl("https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1528715484,4059992687&fm=173&s=CCC27A2344420EFDDC11508A0100A091&w=587&h=422&img.JPEG");
+						article2.setDescription("description2");
+						
+						articleList.add(article1);
+						articleList.add(article2);
+						newsMessage.setArticle(articleList);
+						
+						respMessage = MessageUtil.newsMessageToXml(newsMessage);
+						logger.info("返回图文信息respMessage:" +respMessage);
+						
 						break;
 					}
 					case (MenuManage.btn23Key):{

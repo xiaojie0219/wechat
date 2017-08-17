@@ -140,7 +140,7 @@ public class MessageUtil {
 	 */
 	public  static String imageMessageToXml(ImageMessage imageMessage) {
 		xstream.alias("xml", imageMessage.getClass());
-		xstream.alias("Image", imageMessage.getImage().getClass());
+		xstream.alias("image", imageMessage.getImage().getClass());
 		return xstream.toXML(imageMessage);
 	}
 	
