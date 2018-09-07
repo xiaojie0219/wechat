@@ -1,5 +1,7 @@
 package com.loong.wechat.services;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +61,14 @@ public class LoongService implements Comparable<Object>{
 				}
 				case (MessageUtil.EVENT_TYPE_SCANCODE_WAITMSG): {
 					respContent = "二维码中包含的信息为：" + requestMap.get("ScanResult");
+					File file =new File("D:\\scan.txt");
+					if (!file.exists()){
+						file.createNewFile();
+					}
+					@SuppressWarnings("resource")
+					FileWriter fw = new FileWriter(file,true);
+					fw.write(requestMap.get("ScanResult")+"\r\n");
+					fw.close();
 					break;
 				}
 				case (MessageUtil.EVENT_TYPE_PIC_PHOTO_OR_ALBUM): {

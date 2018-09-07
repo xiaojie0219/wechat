@@ -18,6 +18,6 @@ p {margin-left: 20px}
 	<h2>欢迎进入微信公众号测试页面</h2>
 	<p>	Author: Xiao Jay </p>
 	<p>	BeginDate: 2017-08-16 </p>
-	<img alt="sam.jpg" src="/WEB-INF/image/sam.jpg" />
+	<img alt="sam.jpg" src="/image/sam.jpg" />
 </body>
 </html>

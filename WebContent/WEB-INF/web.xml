@@ -9,7 +9,7 @@
 		<servlet-class>com.loong.wechat.servlet.LoongServlet</servlet-class>
 	</servlet>
 	<welcome-file-list>
-		<welcome-file>/WEB-INF/views/index.jsp</welcome-file>
+		<welcome-file>/index.jsp</welcome-file>
 	</welcome-file-list>
 	<servlet-mapping>
 		<servlet-name>LoongServlet</servlet-name>
